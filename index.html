@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swipe App</title>
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <!-- Swiper.js JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+
+<body>
+    <h1>Swipe App</h1>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://via.placeholder.com/300" alt="Image 1"></div>
+            <div class="swiper-slide"><img src="https://via.placeholder.com/300" alt="Image 2"></div>
+            <div class="swiper-slide"><img src="https://via.placeholder.com/300" alt="Image 3"></div>
+        </div>
+        <!-- Navigation Buttons -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+<script>
+    // Инициализация Swiper.js
+    const swiper = new Swiper('.swiper', {
+        direction: 'horizontal',
+        loop: false,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        effect: 'slide',
+    });
+
+    // Telegram WebApp объект
+    const tg = window.Telegram.WebApp;
+
+    // Обработка свайпов
+    document.querySelector('.swiper').addEventListener('touchend', (event) => {
+        const touchDirection = event.changedTouches[0].clientX > window.innerWidth / 2 ? 'right' : 'left';
+
+        // Отправка данных в Telegram WebApp
+        const swipeData = { action: touchDirection };
+        tg.sendData(JSON.stringify(swipeData)); // Отправка данных в JSON-формате
+
+        console.log(`Swiped ${touchDirection}`); // Для проверки
+    });
+
+    // Убедись, что Telegram WebApp SDK загружен
+    tg.ready();
+</script>
+
+
+
+
+
+</body>
+
+</html>
